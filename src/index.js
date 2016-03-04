@@ -36,7 +36,7 @@ const logger = bunyan.createLogger({
 
 export default logger;
 
-export const requestLoger = bunyanRequest({
+export const requestLogger = bunyanRequest({
   logger,
   headerName: 'x-request-id',
 });
