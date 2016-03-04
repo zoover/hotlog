@@ -1,4 +1,7 @@
 {
   "name": "hodlog",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "dependencies": {
+    "bunyan": "^1.7.1"
+  }
 }
