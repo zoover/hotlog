@@ -40,4 +40,3 @@ export const requestLogger = bunyanRequest({
   logger,
   headerName: 'x-request-id',
 });
-
