@@ -1,4 +1,5 @@
 import bunyan from 'bunyan';
+import bunyanRequest from 'bunyan-request';
 import fs from 'fs';
 
 const runningScript = require.main.filename.split('/').pop();
@@ -28,7 +29,15 @@ streams.push({
   stream: process.stdout,
 });
 
-export default bunyan.createLogger({
+const logger = bunyan.createLogger({
   name: runningScript,
   streams,
 });
+
+export default logger;
+
+export const requestLoger = bunyanRequest({
+  logger,
+  headerName: 'x-request-id',
+});
+
