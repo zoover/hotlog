@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.requestLogger = undefined;
+exports.elasticsearchLogger = elasticsearchLogger;
 
 var _bunyan = require('bunyan');
 
@@ -56,3 +57,22 @@ var requestLogger = exports.requestLogger = (0, _bunyanRequest2.default)({
   logger: logger,
   headerName: 'x-request-id'
 });
+
+function elasticsearchLogger(config) {
+  logger.info(config, 'Create elasticsearch logger');
+  this.error = logger.error.bind(logger);
+  this.warning = logger.warn.bind(logger);
+  this.info = logger.info.bind(logger);
+  this.debug = logger.debug.bind(logger);
+  this.trace = function trace(method, requestUrl, body, responseBody, responseStatus) {
+    logger.trace({
+      method: method,
+      requestUrl: requestUrl,
+      body: body,
+      responseBody: responseBody,
+      responseStatus: responseStatus
+    });
+  };
+  // bunyan has no close
+  this.close = function close() {};
+}

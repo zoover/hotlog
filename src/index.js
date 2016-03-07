@@ -40,3 +40,22 @@ export const requestLogger = bunyanRequest({
   logger,
   headerName: 'x-request-id',
 });
+
+export function elasticsearchLogger(config) {
+  logger.info(config, 'Create elasticsearch logger');
+  this.error = logger.error.bind(logger);
+  this.warning = logger.warn.bind(logger);
+  this.info = logger.info.bind(logger);
+  this.debug = logger.debug.bind(logger);
+  this.trace = function trace(method, requestUrl, body, responseBody, responseStatus) {
+    logger.trace({
+      method,
+      requestUrl,
+      body,
+      responseBody,
+      responseStatus,
+    });
+  };
+  // bunyan has no close
+  this.close = function close() {};
+}
