@@ -41,7 +41,7 @@ export const requestLogger = bunyanRequest({
   headerName: 'x-request-id',
 });
 
-export function elasticsearchLogger(config) {
+export function ElasticsearchLogger(config) {
   logger.info(config, 'Create elasticsearch logger');
   this.error = logger.error.bind(logger);
   this.warning = logger.warn.bind(logger);

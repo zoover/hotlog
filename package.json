@@ -1,6 +1,6 @@
 {
   "name": "hodlog",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "Zoover",
   "main": "./build/index.js",
   "repository": {

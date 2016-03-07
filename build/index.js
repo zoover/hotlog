@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.requestLogger = undefined;
-exports.elasticsearchLogger = elasticsearchLogger;
+exports.ElasticsearchLogger = ElasticsearchLogger;
 
 var _bunyan = require('bunyan');
 
@@ -58,7 +58,7 @@ var requestLogger = exports.requestLogger = (0, _bunyanRequest2.default)({
   headerName: 'x-request-id'
 });
 
-function elasticsearchLogger(config) {
+function ElasticsearchLogger(config) {
   logger.info(config, 'Create elasticsearch logger');
   this.error = logger.error.bind(logger);
   this.warning = logger.warn.bind(logger);
