@@ -1,6 +1,7 @@
 import bunyan from 'bunyan';
 import bunyanRequest from 'bunyan-request';
 import fs from 'fs';
+import stdIOStream from './stdIOStream';
 
 const runningScript = require.main.filename.split('/').pop();
 const rootDirPath = require.main.filename.split('/').slice(0, -1).join('/');
@@ -26,7 +27,7 @@ try {
 
 streams.push({
   level: 'info',
-  stream: process.stdout,
+  stream: stdIOStream,
 });
 
 const logger = bunyan.createLogger({
