@@ -2,13 +2,13 @@ import stream from 'stream';
 
 export default new stream.Writable({
   write(chunk, incoding, next) {
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-    console.log(chunk);
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+    const recordString = chunk.toString();
+    const record = JSON.parse(recordString);
+    if (record.level && record.level > 30) {
+      process.stderr.write(recordString);
+    } else {
+      process.stdout.write(recordString);
+    }
     next();
   }
 });

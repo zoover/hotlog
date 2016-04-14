@@ -18,6 +18,10 @@ var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
 
+var _stdIOStream = require('./stdIOStream');
+
+var _stdIOStream2 = _interopRequireDefault(_stdIOStream);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var runningScript = require.main.filename.split('/').pop();
@@ -44,7 +48,7 @@ try {
 
 streams.push({
   level: 'info',
-  stream: process.stdout
+  stream: _stdIOStream2.default
 });
 
 var logger = _bunyan2.default.createLogger({
