@@ -4,8 +4,7 @@ import fs from 'fs';
 import stdIOStream from './stdIOStream';
 
 const runningScript = require.main.filename.split('/').pop();
-const rootDirPath = require.main.filename.split('/').slice(0, -1).join('/');
-const logDirPath = `${rootDirPath}/log`;
+const logDirPath = `${process.cwd()}/log`;
 const logFilePath = `${logDirPath}/${runningScript}.log`;
 const streams = [];
 

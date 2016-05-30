@@ -10,5 +10,5 @@ export default new stream.Writable({
       process.stdout.write(recordString);
     }
     next();
-  }
+  },
 });

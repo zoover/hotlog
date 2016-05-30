@@ -25,8 +25,7 @@ var _stdIOStream2 = _interopRequireDefault(_stdIOStream);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var runningScript = require.main.filename.split('/').pop();
-var rootDirPath = require.main.filename.split('/').slice(0, -1).join('/');
-var logDirPath = rootDirPath + '/log';
+var logDirPath = process.cwd() + '/log';
 var logFilePath = logDirPath + '/' + runningScript + '.log';
 var streams = [];
 
