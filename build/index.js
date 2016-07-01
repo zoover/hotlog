@@ -3,79 +3,45 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.requestLogger = undefined;
-exports.ElasticsearchLogger = ElasticsearchLogger;
-
-var _bunyan = require('bunyan');
-
-var _bunyan2 = _interopRequireDefault(_bunyan);
+exports.ElasticsearchLogger = exports.requestLogger = undefined;
 
 var _bunyanRequest = require('bunyan-request');
 
 var _bunyanRequest2 = _interopRequireDefault(_bunyanRequest);
 
-var _fs = require('fs');
+var _logger = require('./logger');
 
-var _fs2 = _interopRequireDefault(_fs);
-
-var _stdIOStream = require('./stdIOStream');
-
-var _stdIOStream2 = _interopRequireDefault(_stdIOStream);
+var _logger2 = _interopRequireDefault(_logger);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var runningScript = require.main.filename.split('/').pop();
-var logDirPath = process.cwd() + '/log';
-var logFilePath = logDirPath + '/' + runningScript + '.log';
-var streams = [];
+exports.default = _logger2.default;
+var requestLogger = exports.requestLogger = function (logger) {
+  if (logger.isFrontEnd) return;
+  return (0, _bunyanRequest2.default)({
+    logger: logger,
+    headerName: 'x-request-id'
+  });
+}(_logger2.default);
 
-try {
-  var logDirStats = _fs2.default.statSync(logDirPath);
-  if (logDirStats.isDirectory()) {
-    // create file if not exists
-    var fd = _fs2.default.openSync(logFilePath, 'a');
-    _fs2.default.closeSync(fd);
-
-    streams.push({
-      level: 'info',
-      path: logFilePath
-    });
-  }
-} catch (e) {
-  console.log(e);
-}
-
-streams.push({
-  level: 'info',
-  stream: _stdIOStream2.default
-});
-
-var logger = _bunyan2.default.createLogger({
-  name: runningScript,
-  streams: streams
-});
-
-exports.default = logger;
-var requestLogger = exports.requestLogger = (0, _bunyanRequest2.default)({
-  logger: logger,
-  headerName: 'x-request-id'
-});
-
-function ElasticsearchLogger(config) {
-  logger.info(config, 'Create elasticsearch logger');
-  this.error = logger.error.bind(logger);
-  this.warning = logger.warn.bind(logger);
-  this.info = logger.info.bind(logger);
-  this.debug = logger.debug.bind(logger);
-  this.trace = function trace(method, requestUrl, body, responseBody, responseStatus) {
-    logger.trace({
-      method: method,
-      requestUrl: requestUrl,
-      body: body,
-      responseBody: responseBody,
-      responseStatus: responseStatus
-    });
+var ElasticsearchLogger = exports.ElasticsearchLogger = function (logger) {
+  if (logger.isFrontEnd) return;
+  return function ElasticsearchLogger(config) {
+    logger.info(config, 'Create elasticsearch logger');
+    this.error = logger.error.bind(logger);
+    this.warning = logger.warn.bind(logger);
+    this.info = logger.info.bind(logger);
+    this.debug = logger.debug.bind(logger);
+    this.trace = function trace(method, requestUrl, body, responseBody, responseStatus) {
+      logger.trace({
+        method: method,
+        requestUrl: requestUrl,
+        body: body,
+        responseBody: responseBody,
+        responseStatus: responseStatus
+      });
+    };
+    // bunyan has no close
+    this.close = function close() {};
   };
-  // bunyan has no close
-  this.close = function close() {};
-}
+}(_logger2.default);
