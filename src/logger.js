@@ -4,10 +4,10 @@ import stdIOStream from './stdIOStream';
 
 function FrontEndLogger() {
   this.isFrontEnd = true;
-  this.info = console.log;
-  this.error = console.error;
-  this.warning = console.warn;
-  this.trace = console.trace;
+  this.info = console.log.bind(console);
+  this.error = console.error.bind(console);
+  this.warning = console.warn.bind(console);
+  this.trace = console.trace.bind(console);
 }
 export default (function() {
   if (typeof window !== 'undefined') {
