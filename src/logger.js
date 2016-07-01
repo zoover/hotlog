@@ -4,7 +4,7 @@ import stdIOStream from './stdIOStream';
 
 function FrontEndLogger() {
   this.isFrontEnd = true;
-  this.info = console.info;
+  this.info = console.log;
   this.error = console.error;
   this.warning = console.warn;
   this.trace = console.trace;
