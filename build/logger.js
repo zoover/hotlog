@@ -20,10 +20,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function FrontEndLogger() {
   this.isFrontEnd = true;
-  this.info = console.info;
-  this.error = console.error;
-  this.warning = console.warn;
-  this.trace = console.trace;
+  this.info = console.log.bind(console);
+  this.error = console.error.bind(console);
+  this.warning = console.warn.bind(console);
+  this.trace = console.trace.bind(console);
 }
 
 exports.default = function () {
