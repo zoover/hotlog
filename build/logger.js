@@ -18,11 +18,6 @@ var _stdIOStream2 = _interopRequireDefault(_stdIOStream);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var runningScript = require.main.filename.split('/').pop();
-var logDirPath = process.cwd() + '/log';
-var logFilePath = logDirPath + '/' + runningScript + '.log';
-var streams = [];
-
 function FrontEndLogger() {
   this.isFrontEnd = true;
   this.info = console.info;
@@ -35,6 +30,10 @@ exports.default = function () {
   if (typeof window !== 'undefined') {
     return new FrontEndLogger();
   }
+  var runningScript = require.main.filename.split('/').pop();
+  var logDirPath = process.cwd() + '/log';
+  var logFilePath = logDirPath + '/' + runningScript + '.log';
+  var streams = [];
   try {
     var logDirStats = _fs2.default.statSync(logDirPath);
     if (logDirStats.isDirectory()) {

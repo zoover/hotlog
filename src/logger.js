@@ -1,10 +1,6 @@
 import bunyan from 'bunyan';
 import fs from 'fs';
 import stdIOStream from './stdIOStream';
-const runningScript = require.main.filename.split('/').pop();
-const logDirPath = `${process.cwd()}/log`;
-const logFilePath = `${logDirPath}/${runningScript}.log`;
-const streams = [];
 
 function FrontEndLogger() {
   this.isFrontEnd = true;
@@ -17,6 +13,10 @@ export default (function() {
   if (typeof window !== 'undefined') {
     return new FrontEndLogger();
   }
+  const runningScript = require.main.filename.split('/').pop();
+  const logDirPath = `${process.cwd()}/log`;
+  const logFilePath = `${logDirPath}/${runningScript}.log`;
+  const streams = [];
   try {
     const logDirStats = fs.statSync(logDirPath);
     if (logDirStats.isDirectory()) {
