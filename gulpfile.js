@@ -1,6 +1,9 @@
 const gulp = require('gulp');
 const babel = require('gulp-babel');
-require('gulp-dev-tasks');
+const gdt = require('gulp-dev-tasks');
+const eslintrc = require('./.eslintrc.json');
+
+gdt.setRules(eslintrc.rules);
 
 gulp.task('build', function() {
  return gulp.src('src/**/*.js')

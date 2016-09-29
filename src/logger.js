@@ -9,7 +9,7 @@ function FrontEndLogger() {
   this.warning = console.warn.bind(console);
   this.trace = console.trace.bind(console);
 }
-export default (function() {
+export default (function () {
   if (typeof window !== 'undefined') {
     return new FrontEndLogger();
   }

@@ -3,7 +3,7 @@ import loggerInstance from './logger';
 
 export default loggerInstance;
 
-export const requestLogger = (function(logger) {
+export const requestLogger = (function (logger) {
   if (logger.isFrontEnd) return;
   return bunyanRequest({
     logger,
@@ -12,7 +12,7 @@ export const requestLogger = (function(logger) {
 })(loggerInstance);
 
 
-export const ElasticsearchLogger = (function(logger) {
+export const ElasticsearchLogger = (function (logger) {
   if (logger.isFrontEnd) return;
   return function ElasticsearchLogger(config) {
     logger.info(config, 'Create elasticsearch logger');
@@ -31,5 +31,5 @@ export const ElasticsearchLogger = (function(logger) {
     };
     // bunyan has no close
     this.close = function close() {};
-  }
+  };
 })(loggerInstance);

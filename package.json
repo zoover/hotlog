@@ -8,14 +8,14 @@
     "url": "git://github.com/zoover/hodlog.git"
   },
   "dependencies": {
-    "bunyan": "^1.8.1",
+    "bunyan": "git+https://github.com/trentm/node-bunyan.git",
     "bunyan-request": "^1.2.0"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-stage-2": "^6.5.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-stage-2": "^6.16.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
-    "gulp-dev-tasks": "^1.0.23"
+    "gulp-dev-tasks": "^1.3.4"
   }
 }
