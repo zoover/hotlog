@@ -1,5 +1,12 @@
 import bunyan from 'bunyan';
+import BunyanStackDriver from './bunyan-stackdriver';
 import stdIOStream from './stdIOStream';
+
+const logLevel = process.env.LOG_LEVEL || 'info';
+const appName = process.env.APP_NAME || 'unknown_app';
+const envName = process.env.ENV_NAME || 'unknown_env';
+const teamName = process.env.TEAM || 'unknown_team';
+const version = process.env.TEAM || 'unknwon_version';
 
 function FrontEndLogger() {
   this.isFrontEnd = true;
@@ -8,17 +15,35 @@ function FrontEndLogger() {
   this.warning = console.warn.bind(console);
   this.trace = console.trace.bind(console);
 }
-export default (function () {
+
+// Create the stackdriver stream
+const stackdriverStream = new BunyanStackDriver({
+  logName: `${teamName}/env/${envName}/logs/${appName}`,
+  serviceContext: {
+    service: `${envName}-${appName}`,
+    version,
+  },
+});
+
+export default (() => {
   if (typeof window !== 'undefined') {
     return new FrontEndLogger();
   }
   const runningScript = require.main.filename.split('/').pop();
   const streams = [];
 
-  streams.push({
-    level: 'info',
-    stream: stdIOStream,
-  });
+  if (process.env.NODE_ENV === 'production') {
+    streams.push({
+      type: 'raw',
+      level: logLevel,
+      stream: stackdriverStream,
+    });
+  } else {
+    streams.push({
+      level: logLevel,
+      stream: stdIOStream,
+    });
+  }
 
   return bunyan.createLogger({
     name: runningScript,
