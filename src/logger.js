@@ -6,7 +6,6 @@ const logLevel = process.env.LOG_LEVEL || 'info';
 const appName = process.env.APP_NAME || 'unknown_app';
 const envName = process.env.ENV_NAME || 'unknown_env';
 const teamName = process.env.TEAM || 'unknown_team';
-const version = process.env.TEAM || 'unknwon_version';
 
 function FrontEndLogger() {
   this.isFrontEnd = true;
@@ -19,10 +18,6 @@ function FrontEndLogger() {
 // Create the stackdriver stream
 const stackdriverStream = new BunyanStackDriver({
   logName: `${teamName}/env/${envName}/logs/${appName}`,
-  serviceContext: {
-    service: `${envName}-${appName}`,
-    version,
-  },
 });
 
 export default (() => {

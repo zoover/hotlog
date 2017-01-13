@@ -3,6 +3,10 @@ import logging from '@google-cloud/logging';
 import stream from 'stream';
 import destroyCircular from 'destroy-circular';
 
+const appName = process.env.APP_NAME || 'unknown_app';
+const envName = process.env.ENV_NAME || 'unknown_env';
+const version = process.env.TEAM || 'unknwon_version';
+
 const Writable = stream.Writable;
 
 const nameFromLevel = {
@@ -121,6 +125,12 @@ BunyanStackDriver.prototype._write = function write( // eslint-disable-line no-u
     resource: this.resource,
     timestamp,
     severity: mapLevelToSeverity[nameFromLevel[record.level]] || 'DEFAULT',
+  };
+
+  // Add service context to record
+  record.serviceContext = {
+    service: `${envName}-${appName}`,
+    version,
   };
 
   const entry = this.log.entry(metadata, record);
