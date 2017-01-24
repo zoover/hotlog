@@ -11,7 +11,7 @@ function FrontEndLogger() {
   this.trace = console.trace.bind(console);
 }
 
-export default (() => {
+export default (function () {
   if (typeof window !== 'undefined') {
     return new FrontEndLogger();
   }
