@@ -14,6 +14,8 @@ var _stdIOStream2 = _interopRequireDefault(_stdIOStream);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var logLevel = process.env.LOG_LEVEL || 'info';
+
 function FrontEndLogger() {
   this.isFrontEnd = true;
   this.info = console.log.bind(console);
@@ -30,7 +32,7 @@ exports.default = function () {
   var streams = [];
 
   streams.push({
-    level: 'info',
+    level: logLevel,
     stream: _stdIOStream2.default
   });
 
