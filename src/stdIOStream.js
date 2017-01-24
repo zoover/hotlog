@@ -12,7 +12,7 @@ export default new stream.Writable({
     // We add serviceContext for use in Stackdrive
     // See: https://github.com/GoogleCloudPlatform/fluent-plugin-google-cloud/issues/99
     record.serviceContext = {
-      service: `${envName}-${appName}`,
+      service: `${envName}/${appName}`,
       version,
     };
 
