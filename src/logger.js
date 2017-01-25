@@ -1,6 +1,8 @@
 import bunyan from 'bunyan';
 import stdIOStream from './stdIOStream';
 
+const logLevel = process.env.LOG_LEVEL || 'info';
+
 function FrontEndLogger() {
   this.isFrontEnd = true;
   this.info = console.log.bind(console);
@@ -8,6 +10,7 @@ function FrontEndLogger() {
   this.warning = console.warn.bind(console);
   this.trace = console.trace.bind(console);
 }
+
 export default (function () {
   if (typeof window !== 'undefined') {
     return new FrontEndLogger();
@@ -16,7 +19,7 @@ export default (function () {
   const streams = [];
 
   streams.push({
-    level: 'info',
+    level: logLevel,
     stream: stdIOStream,
   });
 
