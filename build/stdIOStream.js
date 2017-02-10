@@ -27,9 +27,9 @@ exports.default = new _stream2.default.Writable({
     };
 
     if (record.level && record.level > 30) {
-      process.stderr.write(JSON.stringify(record, null, 1)); // spacing level = 1
+      process.stderr.write(JSON.stringify(record) + '\n');
     } else {
-      process.stdout.write(JSON.stringify(record, null, 1));
+      process.stdout.write(JSON.stringify(record) + '\n');
     }
     next();
   }
