@@ -22,14 +22,14 @@ exports.default = new _stream2.default.Writable({
     // We add serviceContext for use in Stackdrive
     // See: https://github.com/GoogleCloudPlatform/fluent-plugin-google-cloud/issues/99
     record.serviceContext = {
-      service: envName + '-' + appName,
+      service: envName + '/' + appName,
       version: version
     };
 
     if (record.level && record.level > 30) {
-      process.stderr.write(JSON.stringify(record));
+      process.stderr.write(JSON.stringify(record, null, 1)); // spacing level = 1
     } else {
-      process.stdout.write(JSON.stringify(record));
+      process.stdout.write(JSON.stringify(record, null, 1));
     }
     next();
   }
