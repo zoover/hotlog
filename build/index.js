@@ -16,17 +16,17 @@ var _logger2 = _interopRequireDefault(_logger);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _logger2.default;
-var requestLogger = exports.requestLogger = function (logger) {
-  if (logger.isFrontEnd) return;
+var requestLogger = exports.requestLogger = function requestLogger(logger) {
+  if (logger.isFrontEnd) return undefined;
   return (0, _bunyanRequest2.default)({
     logger: logger,
     headerName: 'x-request-id'
   });
 }(_logger2.default);
 
-var ElasticsearchLogger = exports.ElasticsearchLogger = function (logger) {
-  if (logger.isFrontEnd) return;
-  return function ElasticsearchLogger(config) {
+var ElasticsearchLogger = exports.ElasticsearchLogger = function ElasticsearchLogger(logger) {
+  if (logger.isFrontEnd) return undefined;
+  return function ESLogger(config) {
     logger.info(config, 'Create elasticsearch logger');
     this.error = logger.error.bind(logger);
     this.warning = logger.warn.bind(logger);
