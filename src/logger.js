@@ -18,8 +18,13 @@ export default (function logger() {
     stream: stdIOStream,
   });
 
-  return bunyan.createLogger({
+  const bunyanLogger = bunyan.createLogger({
     name: runningScript,
     streams,
   });
+
+  console.log(bunyanLogger);
+
+  return bunyanLogger;
+
 }());
